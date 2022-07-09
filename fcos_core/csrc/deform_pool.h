@@ -23,7 +23,7 @@ void deform_psroi_pooling_forward(
     const int sample_per_part, 
     const float trans_std)
 {
-  if (input.type().is_cuda()) {
+  if (input.options().is_cuda()) {
 #ifdef WITH_CUDA
     return deform_psroi_pooling_cuda_forward(
         input, bbox, trans, out, top_count, 
