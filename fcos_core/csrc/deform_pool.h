@@ -55,7 +55,7 @@ void deform_psroi_pooling_backward(
     const int sample_per_part, 
     const float trans_std) 
 {
-  if (input.type().is_cuda()) {
+  if (input.options().is_cuda()) {
 #ifdef WITH_CUDA
     return deform_psroi_pooling_cuda_backward(
         out_grad, input, bbox, trans, top_count, input_grad, trans_grad,
