@@ -5,19 +5,19 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    DATA_DIR = "content"
     DATASETS = {
-        "coco_2017_train": {
-            "img_dir": "coco/train2017",
-            "ann_file": "coco/annotations/instances_train2017.json"
+       "coco_2017_train": {
+            "img_dir": "coco_style/images/train",
+            "ann_file": "coco_style/annotations/train.json"
         },
         "coco_2017_val": {
-            "img_dir": "coco/val2017",
-            "ann_file": "coco/annotations/instances_val2017.json"
+            "img_dir": "coco_style/images/test",
+            "ann_file": "coco_style/annotations/test.json"
         },
         "coco_2017_test_dev": {
-            "img_dir": "coco/test2017",
-            "ann_file": "coco/annotations/image_info_test-dev2017.json"
+            "img_dir": "coco_style/images/test",
+            "ann_file": "coco_style/annotations/test.json"
         },
         "coco_2014_train": {
             "img_dir": "coco/train2014",
