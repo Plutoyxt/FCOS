@@ -1,5 +1,5 @@
 // Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
-#include "vision.h"
+#include "cpu/vision.h"
 
 
 template <typename scalar_t>
