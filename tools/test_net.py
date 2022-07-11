@@ -1,6 +1,10 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 # Set up custom environment before nearly anything else is imported
 # NOTE: this should be the first import (no not reorder)
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+import sys
+sys.path.append('/content/cocoapi/PythonAPI/FCOS/')
 from fcos_core.utils.env import setup_environment  # noqa F401 isort:skip
 
 import argparse
