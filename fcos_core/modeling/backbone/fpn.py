@@ -75,7 +75,7 @@ class FPN(nn.Module):
         P4 = P3D + C4_inner
         results.append(getattr(self, self.layer_blocks[-2])(P4))#p4
         P4D = F.interpolate(
-                P3, size=(int(last_inner.shape[-2]), int(last_inner.shape[-1])),
+                P4, size=(int(last_inner.shape[-2]), int(last_inner.shape[-1])),
                 mode='nearest'
             )#P4下采样一次到C5
         P5 = P4D + last_inner
