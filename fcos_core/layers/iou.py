@@ -6,7 +6,7 @@ from torch import nn
 
 class IOULoss1(nn.Module):
     def __init__(self, loss_type="iou"):
-        super(IOULoss, self).__init__()
+        super(IOULoss1, self).__init__()
         self.loss_type = loss_type
 
     def forward(self, pred, target, weight=None):
