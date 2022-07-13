@@ -277,7 +277,8 @@ class FCOSLossComputation(object):
         else:
             reg_loss = box_regression_flatten.sum()
             reduce_sum(centerness_flatten.new_tensor([0.0]))
-            centerness_loss = centerness_flatten.sum()
+            #centerness_loss = centerness_flatten.sum()
+            centerness_loss = box_regression_flatten.sum()
 
         return cls_loss, reg_loss, centerness_loss
 
