@@ -205,6 +205,7 @@ class FCOSLossComputation(object):
         top_bottom = reg_targets[:, [1, 3]]
         centerness = (left_right.min(dim=-1)[0] / left_right.max(dim=-1)[0]) * \
                       #(top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
+        
         return torch.sqrt(centerness)
     
     def __call__(self, locations, box_cls, box_regression, centerness, targets):
