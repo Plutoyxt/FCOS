@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 
-class IOULoss(nn.Module):
+class IOULoss1(nn.Module):
     def __init__(self, loss_type="iou"):
         super(IOULoss, self).__init__()
         self.loss_type = loss_type
