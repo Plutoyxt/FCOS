@@ -204,7 +204,7 @@ class FCOSLossComputation(object):
         left_right = reg_targets[:, [0, 2]]
         top_bottom = reg_targets[:, [1, 3]]
         centerness = (left_right.min(dim=-1)[0] / left_right.max(dim=-1)[0]) * \
-                      #(top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
+                     (top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
         
         return torch.sqrt(centerness)
     
@@ -280,9 +280,8 @@ class FCOSLossComputation(object):
         else:
             reg_loss = box_regression_flatten.sum()
             reduce_sum(centerness_flatten.new_tensor([0.0]))
-            #centerness_loss = centerness_flatten.sum()
-            centerness_loss = box_regression_flatten.sum()
-
+            centerness_loss = centerness_flatten.sum()
+            
         #return cls_loss, reg_loss, centerness_loss
         return cls_loss, reg_loss, reg_loss
 
