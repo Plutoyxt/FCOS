@@ -33,12 +33,5 @@ class IOULoss1(nn.Module):
         area_union = target_area + pred_area - area_intersect
         ious = (area_intersect + 1.0) / (area_union + 1.0)
         gious = ious - (ac_uion - area_union) / ac_uion
-        if self.loss_type == 'iou':
-            losses = -torch.log(ious)
-        elif self.loss_type == 'linear_iou':
-            losses = 1 - ious
-        elif self.loss_type == 'giou':
-            losses = 1 - gious
-        else:
-            raise NotImplementedError
-        return losses
+        
+        return ious
