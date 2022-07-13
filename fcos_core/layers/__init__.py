@@ -15,6 +15,7 @@ from .roi_pool import roi_pool
 from .smooth_l1_loss import smooth_l1_loss
 from .sigmoid_focal_loss import SigmoidFocalLoss
 from .iou_loss import IOULoss
+from .iou import IOULoss1
 from .scale import Scale
 from .dcn.deform_conv_func import deform_conv, modulated_deform_conv
 from .dcn.deform_conv_module import DeformConv, ModulatedDeformConv, \
@@ -49,5 +50,6 @@ __all__ = [
     'DeformRoIPoolingPack',
     'ModulatedDeformRoIPoolingPack',
     "IOULoss",
+    "IOULoss1",
     "Scale"
 ]
