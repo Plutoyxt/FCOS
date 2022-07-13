@@ -52,6 +52,7 @@ class FCOSLossComputation(object):
         # but we found that L1 in log scale can yield a similar performance
         self.box_reg_loss_func = IOULoss(self.iou_loss_type)
         self.centerness_loss_func = nn.BCEWithLogitsLoss(reduction="sum")
+        self.iouness_func = IOULoss1(self.iou_loss_type)
 
     def get_sample_region(self, gt, strides, num_points_per, gt_xs, gt_ys, radius=1.0):
         '''
@@ -200,12 +201,13 @@ class FCOSLossComputation(object):
         return labels, reg_targets
 
     def compute_centerness_targets(self, reg_targets):
-        left_right = reg_targets[:, [0, 2]]
-        top_bottom = reg_targets[:, [1, 3]]
-        centerness = (left_right.min(dim=-1)[0] / left_right.max(dim=-1)[0]) * \
-                      (top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
+    #def compute_centerness_targets(self,pred,target):
+        #left_right = reg_targets[:, [0, 2]]
+        #top_bottom = reg_targets[:, [1, 3]]
+        #centerness = (left_right.min(dim=-1)[0] / left_right.max(dim=-1)[0]) * \
+                      #(top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
+        centerness = 1
         return torch.sqrt(centerness)
-
     def __call__(self, locations, box_cls, box_regression, centerness, targets):
         """
         Arguments:
@@ -257,10 +259,10 @@ class FCOSLossComputation(object):
             box_cls_flatten,
             labels_flatten.int()
         ) / num_pos_avg_per_gpu
-
+        
+      
         if pos_inds.numel() > 0:
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
-
             # average sum_centerness_targets from all gpus,
             # which is used to normalize centerness-weighed reg loss
             sum_centerness_targets_avg_per_gpu = \
@@ -281,7 +283,8 @@ class FCOSLossComputation(object):
             #centerness_loss = centerness_flatten.sum()
             centerness_loss = box_regression_flatten.sum()
 
-        return cls_loss, reg_loss, centerness_loss
+        #return cls_loss, reg_loss, centerness_loss
+        return cls_loss, reg_loss, reg_loss
 
 
 def make_fcos_loss_evaluator(cfg):
