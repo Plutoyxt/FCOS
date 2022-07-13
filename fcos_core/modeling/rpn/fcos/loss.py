@@ -9,6 +9,7 @@ from torch import nn
 import os
 from ..utils import concat_box_prediction_layers
 from fcos_core.layers import IOULoss
+from fcos_core.layers import IOULoss1
 from fcos_core.layers import SigmoidFocalLoss
 from fcos_core.modeling.matcher import Matcher
 from fcos_core.modeling.utils import cat
