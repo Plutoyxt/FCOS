@@ -171,8 +171,8 @@ class FCOSModule(torch.nn.Module):
         losses = {
             "loss_cls": loss_box_cls,
             "loss_reg": loss_box_reg,
-            #"loss_centerness": loss_centerness
-            "loss_IOUness": loss_centerness
+            "loss_centerness": loss_centerness
+            #"loss_IOUness": loss_centerness
         }
         return None, losses
 
