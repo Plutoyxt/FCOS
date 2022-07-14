@@ -282,8 +282,8 @@ class FCOSLossComputation(object):
             reduce_sum(centerness_flatten.new_tensor([0.0]))
             centerness_loss = centerness_flatten.sum()
             
-        #return cls_loss, reg_loss, centerness_loss
-        return cls_loss, reg_loss, reg_loss
+        return cls_loss, reg_loss, centerness_loss
+        #return cls_loss, reg_loss, reg_loss
 
 
 def make_fcos_loss_evaluator(cfg):
