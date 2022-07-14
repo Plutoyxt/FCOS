@@ -55,24 +55,24 @@ class DatasetCatalog(object):
             "split": "train"
         },
         "voc_2007_train_cocostyle": {
-            "img_dir": "voc/VOC2007/JPEGImages",
-            "ann_file": "voc/VOC2007/Annotations/pascal_train2007.json"
+            "img_dir": "/content/SSDD-data/JPEGImages",
+            "ann_file": "/content/ssdd-coco /annotations/train2017/trainval.json"
         },
         "voc_2007_val": {
             "data_dir": "voc/VOC2007",
             "split": "val"
         },
         "voc_2007_val_cocostyle": {
-            "img_dir": "voc/VOC2007/JPEGImages",
-            "ann_file": "voc/VOC2007/Annotations/pascal_val2007.json"
+            "img_dir": "/content/SSDD-data/JPEGImages",
+            "ann_file": "/content/ssdd-coco /annotations/val2017/val.json"
         },
         "voc_2007_test": {
             "data_dir": "voc/VOC2007",
             "split": "test"
         },
         "voc_2007_test_cocostyle": {
-            "img_dir": "voc/VOC2007/JPEGImages",
-            "ann_file": "voc/VOC2007/Annotations/pascal_test2007.json"
+            "img_dir": "/content/SSDD-data/JPEGImages",
+            "ann_file": "/content/ssdd-coco /annotations/test2017/test.json"
         },
         "voc_2012_train": {
             "data_dir": "voc/VOC2012",
