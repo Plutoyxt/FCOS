@@ -69,11 +69,6 @@ def train(cfg, local_rank, distributed):
         start_iter=arguments["iteration"],
     )
 
-    for i, input_data in enumerate(data_loader):
-      j=0
-      while j!= int(len(input_data[-1])):
-        print('input_data%d' % i, (input_data[-1])[j])
-        j=j+1
 
     checkpoint_period = cfg.SOLVER.CHECKPOINT_PERIOD
 
@@ -178,7 +173,18 @@ def main():
         config_str = "\n" + cf.read()
         logger.info(config_str)
     logger.info("Running with config:\n{}".format(cfg))
-
+    data_loader = make_data_loader(cfg,
+        is_train=True,
+        is_distributed=args.distributed,
+        start_iter=0,)
+    for i, input_data in enumerate(data_loader):
+      j=0
+      b = []
+      while j!= int(len(input_data[-1])):
+        b.append(int((input_data[-1])[j]))
+        #print('input_data%d' % i, (input_data[-1])[j])
+        j=j+1
+      print('input_data%d' % i,b)
     model = train(cfg, args.local_rank, args.distributed)
 
     if not args.skip_test:
