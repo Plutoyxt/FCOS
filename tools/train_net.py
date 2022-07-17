@@ -69,6 +69,10 @@ def train(cfg, local_rank, distributed):
         start_iter=arguments["iteration"],
     )
 
+    for i, (input_data, target) in enumerate(dataloader):
+        print('input_data%d' % i, input_data)
+        print('target%d' % i, target)
+
     checkpoint_period = cfg.SOLVER.CHECKPOINT_PERIOD
 
     do_train(
