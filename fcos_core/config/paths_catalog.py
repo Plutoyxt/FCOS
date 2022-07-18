@@ -7,15 +7,15 @@ class DatasetCatalog(object):
     DATA_DIR = "/content"
     DATASETS = {
         "coco_2017_train": {
-            "img_dir": "ssdd-coco 2/images/train1",
+            "img_dir": "gdrive/MyDrive/train1 coco ",
             "ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
         },
         "coco_2017_val": {
-            "img_dir": "ssdd-coco 2/images/val1",
+            "img_dir": "gdrive/MyDrive/val1 coco",
             "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
         },
         "coco_2017_test_dev": {
-            "img_dir": "/content/ssdd-coco 2/images/test",
+            "img_dir": "gdrive/MyDrive/val1 coco",
             "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
         },
         "coco_2014_train": {
