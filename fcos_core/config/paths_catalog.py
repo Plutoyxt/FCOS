@@ -7,7 +7,7 @@ class DatasetCatalog(object):
     DATA_DIR = "/content"
     DATASETS = {
         "coco_2017_train": {
-            "img_dir": "gdrive/MyDrive/train2 coco ",
+            "img_dir": "gdrive/MyDrive/train2 coco",
             #"img_dir": "ssdd-coco 2/images/train",
             "ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
         },
