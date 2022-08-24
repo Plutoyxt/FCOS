@@ -7,25 +7,25 @@ class DatasetCatalog(object):
     DATA_DIR = "/content"
     DATASETS = {
         "coco_2017_train": {
-            #"img_dir": "gdrive/MyDrive/train2 coco",
-            "img_dir": "gdrive/MyDrive/HRSID_JPG/train_image", 
+            "img_dir": "gdrive/MyDrive/train2 coco",
+            #"img_dir": "gdrive/MyDrive/HRSID_JPG/train_image", 
             #"img_dir": "ssdd-coco 2/images/train",#after_
-            #"ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
-            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
+            "ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
+            #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
         },
         "coco_2017_val": {
-            #"img_dir": "gdrive/MyDrive/val2 coco",
+            "img_dir": "gdrive/MyDrive/val2 coco",
             #"img_dir": "ssdd-coco 2/images/val",
-            #"ann_file": "ssdd-coco 2/annotations/test2017/test.json"
-            "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
-            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
+            "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
+            #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
+            #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2017_test_dev": {
-            #"img_dir": "gdrive/MyDrive/val2 coco",
+            "img_dir": "gdrive/MyDrive/val2 coco",
             #"img_dir": "ssdd-coco 2/images/val",
-            #"ann_file": "ssdd-coco 2/annotations/test2017/test.json"
-            "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
-            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
+            "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
+            #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
+            #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2014_train": {
             "img_dir": "coco/train2014",
