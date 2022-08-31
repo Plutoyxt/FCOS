@@ -48,38 +48,23 @@ class FPN(nn.Module):
             results (tuple[Tensor]): feature maps after FPN layers.
                 They are ordered from highest resolution first.
         """
-        last_inner = getattr(self, self.inner_blocks[-1])(x[-1])#C5
-        C4_inner =  getattr(self, self.inner_blocks[-2])(x[-2])
-        #C4_inner =  getattr(self, self.inner_blocks[:-1][::-1])(x[:-1][::-1])#C4
-        #C3_inner =  getattr(self, self.inner_blocks[:-2][::-2])(x[:-2][::-2])#C3
-        C3_inner =  getattr(self, self.inner_blocks[-3])(x[-3])
-        c5s = F.interpolate(
-                last_inner, size=(int(C4_inner.shape[-2]), int(C4_inner.shape[-1])),
-                mode='nearest'
-            )#C5上采样一次到C4
-        c5ss = F.interpolate(
-                c5s, size=(int(C3_inner.shape[-2]), int(C3_inner.shape[-1])),
-                mode='nearest'
-            )#C5上采样两次到C3
-        c4s = F.interpolate(
-                C4_inner, size=(int(C3_inner.shape[-2]), int(C3_inner.shape[-1])),
-                mode='nearest'
-            )#C4上采样一次到C3
-        P3 = c5ss + c4s + C3_inner
+        last_inner = getattr(self, self.inner_blocks[-1])(x[-1])
         results = []
-        results.append(getattr(self, self.layer_blocks[-3])(P3))#p3
-        P3D = F.interpolate(
-                P3, size=(int(C4_inner.shape[-2]), int(C4_inner.shape[-1])),
+        results.append(getattr(self, self.layer_blocks[-1])(last_inner))
+        for feature, inner_block, layer_block in zip(
+            x[:-1][::-1], self.inner_blocks[:-1][::-1], self.layer_blocks[:-1][::-1]
+        ):
+            if not inner_block:
+                continue
+            # inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
+            inner_lateral = getattr(self, inner_block)(feature)
+            inner_top_down = F.interpolate(
+                last_inner, size=(int(inner_lateral.shape[-2]), int(inner_lateral.shape[-1])),
                 mode='nearest'
-            )#P3下采样一次到C4
-        P4 = P3D + C4_inner
-        results.append(getattr(self, self.layer_blocks[-2])(P4))#p4
-        P4D = F.interpolate(
-                P4, size=(int(last_inner.shape[-2]), int(last_inner.shape[-1])),
-                mode='nearest'
-            )#P4下采样一次到C5
-        P5 = P4D + last_inner
-        results.append(getattr(self, self.layer_blocks[-1])(P5))#p5
+            )
+            last_inner = inner_lateral + inner_top_down
+            results.insert(0, getattr(self, layer_block)(last_inner))
+
         if isinstance(self.top_blocks, LastLevelP6P7):
             last_results = self.top_blocks(x[-1], results[-1])
             results.extend(last_results)
