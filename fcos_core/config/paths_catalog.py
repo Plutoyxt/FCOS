@@ -9,7 +9,7 @@ class DatasetCatalog(object):
         "coco_2017_train": {
             #"img_dir": "gdrive/MyDrive/train2 coco",
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/train_image", 
-            "img_dir": "gdrive/MyDrive/ssdd_coco/train/train.json",#after_
+            "img_dir": "gdrive/MyDrive/ssdd_coco/train/train_image",#after_
             "ann_file": "gdrive/MyDrive/ssdd_coco/train/train.json"
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
         },
