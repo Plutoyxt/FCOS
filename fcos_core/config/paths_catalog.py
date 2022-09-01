@@ -9,21 +9,21 @@ class DatasetCatalog(object):
         "coco_2017_train": {
             #"img_dir": "gdrive/MyDrive/train2 coco",
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/train_image", 
-            "img_dir": "gdrive/MyDrive/ssdd_coco/train/after_train_image",#after_
-            "ann_file": "gdrive/MyDrive/ssdd_coco/train/train.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/train1/after_train_image",#after_
+            "ann_file": "gdrive/MyDrive/ssdd_coco/train1/train.json"
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
         },
         "coco_2017_val": {
             #"img_dir": "gdrive/MyDrive/val2 coco",
-            "img_dir": "gdrive/MyDrive/ssdd_coco/test/after_test_image",
-            "ann_file": "gdrive/MyDrive/ssdd_coco/test/test.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/test1/after_test_image",
+            "ann_file": "gdrive/MyDrive/ssdd_coco/test1/test.json"
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2017_test_dev": {
             #"img_dir": "gdrive/MyDrive/val2 coco", 
-            "img_dir": "gdrive/MyDrive/ssdd_coco/test/after_test_image",
-            "ann_file": "gdrive/MyDrive/ssdd_coco/test/test.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/test1/after_test_image",
+            "ann_file": "gdrive/MyDrive/ssdd_coco/test1/test.json"
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
