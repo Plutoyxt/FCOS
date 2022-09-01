@@ -22,8 +22,8 @@ class DatasetCatalog(object):
         },
         "coco_2017_test_dev": {
             #"img_dir": "gdrive/MyDrive/val2 coco", 
-            "img_dir": "gdrive/MyDrive/ssdd_coco/val1/after_val_image",
-            "ann_file": "gdrive/MyDrive/ssdd_coco/val1/val.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/test1/after_test_image",
+            "ann_file": "gdrive/MyDrive/ssdd_coco/test1/test.json"
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
