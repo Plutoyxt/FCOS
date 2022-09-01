@@ -9,8 +9,8 @@ class DatasetCatalog(object):
         "coco_2017_train": {
             #"img_dir": "gdrive/MyDrive/train2 coco",
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/train_image", 
-            "img_dir": "gdrive/MyDrive/train2 coco",#after_
-            "ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/train/train.json",#after_
+            "ann_file": "gdrive/MyDrive/ssdd_coco/train/train.json"
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
         },
         "coco_2017_val": {
@@ -22,8 +22,8 @@ class DatasetCatalog(object):
         },
         "coco_2017_test_dev": {
             #"img_dir": "gdrive/MyDrive/val2 coco", 
-            "img_dir": "gdrive/MyDrive/val2 coco",
-            "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
+            "img_dir": "gdrive/MyDrive/ssdd_coco/test/test_image",
+            "ann_file": "gdrive/MyDrive/ssdd_coco/test/test.json"
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
