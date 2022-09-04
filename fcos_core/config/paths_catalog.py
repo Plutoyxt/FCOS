@@ -23,7 +23,7 @@ class DatasetCatalog(object):
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2017_test_dev": {
-             "img_dir": "ssdd-coco 2/images/test",
+            "img_dir": "ssdd-coco 2/images/test",
             #"img_dir": "gdrive/MyDrive/val2 coco", 
             #"img_dir": "gdrive/MyDrive/ssdd_coco/test/test_image",
             "ann_file": "ssdd-coco 2/annotations/test2017/test.json"
