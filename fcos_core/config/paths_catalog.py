@@ -26,7 +26,7 @@ class DatasetCatalog(object):
             #"img_dir": "ssdd-coco 2/images/test",
             #"img_dir": "gdrive/MyDrive/val2 coco", 
             #"img_dir": "gdrive/MyDrive/ssdd_coco/test/test_image",
-            "ann_file": "gdrive/MyDrive/ssdd_coco/val1/val.json"
+            "ann_file": "gdrive/MyDrive/ssdd_coco/val1/val.json",
             "img_dir": "gdrive/MyDrive/ssdd_coco/val1/val_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
