@@ -31,12 +31,16 @@ class DatasetCatalog(object):
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2014_train": {
-            "img_dir": "coco/train2014",
-            "ann_file": "coco/annotations/instances_train2014.json"
+            "img_dir": "gdrive/MyDrive/HRSID_JPG/train_image",
+            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/train2017.json"
         },
         "coco_2014_val": {
-            "img_dir": "coco/val2014",
-            "ann_file": "coco/annotations/instances_val2014.json"
+            "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
+            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
+        },
+        "coco_2014_test": {
+            "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
+            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2014_minival": {
             "img_dir": "coco/val2014",
