@@ -48,6 +48,7 @@ class FPN(nn.Module):
             results (tuple[Tensor]): feature maps after FPN layers.
                 They are ordered from highest resolution first.
         """
+        #last_inner是C5
         last_inner = getattr(self, self.inner_blocks[-1])(x[-1])
         results = []
         results.append(getattr(self, self.layer_blocks[-1])(last_inner))
@@ -58,10 +59,13 @@ class FPN(nn.Module):
                 continue
             # inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
             inner_lateral = getattr(self, inner_block)(feature)
+            #第一次进来这里是C5上采样到C4 inner_lateral是C4
+            #第二次进来inner_lateral是C3
             inner_top_down = F.interpolate(
                 last_inner, size=(int(inner_lateral.shape[-2]), int(inner_lateral.shape[-1])),
                 mode='nearest'
             )
+            #last_inner变为C5上采样后和C4相加
             last_inner = inner_lateral + inner_top_down
             results.insert(0, getattr(self, layer_block)(last_inner))
 
