@@ -24,7 +24,7 @@ def build_resnet_backbone(cfg):
 @registry.BACKBONES.register("R-50-FPN")
 @registry.BACKBONES.register("R-101-FPN")
 @registry.BACKBONES.register("R-152-FPN")
-def build_resnet_fpn_backbone(cfg,target=None):
+def build_resnet_fpn_backbone(cfg,targets=None):
     body = resnet.ResNet(cfg)
     in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -49,7 +49,7 @@ def build_resnet_fpn_backbone(cfg,target=None):
 
 @registry.BACKBONES.register("R-50-FPN-RETINANET")
 @registry.BACKBONES.register("R-101-FPN-RETINANET")
-def build_resnet_fpn_p3p7_backbone(cfg,target=None):
+def build_resnet_fpn_p3p7_backbone(cfg,targets=None):
     body = resnet.ResNet(cfg)
     in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -75,7 +75,7 @@ def build_resnet_fpn_p3p7_backbone(cfg,target=None):
 
 
 @registry.BACKBONES.register("MNV2-FPN-RETINANET")
-def build_mnv2_fpn_backbone(cfg,target=None):
+def build_mnv2_fpn_backbone(cfg,targets=None):
     body = mobilenet.MobileNetV2(cfg)
     in_channels_stage2 = body.return_features_num_channels
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -98,9 +98,9 @@ def build_mnv2_fpn_backbone(cfg,target=None):
     return model
 
 
-def build_backbone(cfg,target=None):
+def build_backbone(cfg,targets=None):
     assert cfg.MODEL.BACKBONE.CONV_BODY in registry.BACKBONES, \
         "cfg.MODEL.BACKBONE.CONV_BODY: {} are not registered in registry".format(
             cfg.MODEL.BACKBONE.CONV_BODY
         )
-    return registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg,target=None)
+    return registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg,targets=None)
