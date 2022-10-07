@@ -12,7 +12,7 @@ class FPN(nn.Module):
     """
 
     def __init__(
-        self, in_channels_list, out_channels, conv_block, top_blocks=None
+        self, in_channels_list, out_channels, conv_block, top_blocks=None,targets=None
     ):
         """
         Arguments:
@@ -39,6 +39,7 @@ class FPN(nn.Module):
             self.inner_blocks.append(inner_block)
             self.layer_blocks.append(layer_block)
         self.top_blocks = top_blocks
+        self.targets = targets
 
     def forward(self, x):
         """
