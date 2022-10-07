@@ -23,14 +23,14 @@ class GeneralizedRCNN(nn.Module):
         detections / masks from it.
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg, targets):
         super(GeneralizedRCNN, self).__init__()
 
-        self.backbone = build_backbone(cfg)
+        self.backbone = build_backbone(cfg,targets)
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 
-    def forward(self, images, targets=None):
+    def forward(self, images):
         """
         Arguments:
             images (list[Tensor] or ImageList): images to be processed
@@ -46,7 +46,7 @@ class GeneralizedRCNN(nn.Module):
         if self.training and targets is None:
             raise ValueError("In training mode, targets should be passed")
         images = to_image_list(images)
-        features = self.backbone(images.tensors)
+        features = self.backbone(images.tensors,targets)
         proposals, proposal_losses = self.rpn(images, features, targets)
         if self.roi_heads:
             x, result, detector_losses = self.roi_heads(features, proposals, targets)
