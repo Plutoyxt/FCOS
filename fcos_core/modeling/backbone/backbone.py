@@ -24,7 +24,7 @@ def build_resnet_backbone(cfg):
 @registry.BACKBONES.register("R-50-FPN")
 @registry.BACKBONES.register("R-101-FPN")
 @registry.BACKBONES.register("R-152-FPN")
-def build_resnet_fpn_backbone(cfg):
+def build_resnet_fpn_backbone(cfg,target=None):
     body = resnet.ResNet(cfg)
     in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -40,6 +40,7 @@ def build_resnet_fpn_backbone(cfg):
             cfg.MODEL.FPN.USE_GN, cfg.MODEL.FPN.USE_RELU
         ),
         top_blocks=fpn_module.LastLevelMaxPool(),
+        targets=None,
     )
     model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
     model.out_channels = out_channels
@@ -48,7 +49,7 @@ def build_resnet_fpn_backbone(cfg):
 
 @registry.BACKBONES.register("R-50-FPN-RETINANET")
 @registry.BACKBONES.register("R-101-FPN-RETINANET")
-def build_resnet_fpn_p3p7_backbone(cfg):
+def build_resnet_fpn_p3p7_backbone(cfg,target=None):
     body = resnet.ResNet(cfg)
     in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -66,6 +67,7 @@ def build_resnet_fpn_p3p7_backbone(cfg):
             cfg.MODEL.FPN.USE_GN, cfg.MODEL.FPN.USE_RELU
         ),
         top_blocks=fpn_module.LastLevelP6P7(in_channels_p6p7, out_channels),
+        targets=None,
     )
     model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
     model.out_channels = out_channels
@@ -73,7 +75,7 @@ def build_resnet_fpn_p3p7_backbone(cfg):
 
 
 @registry.BACKBONES.register("MNV2-FPN-RETINANET")
-def build_mnv2_fpn_backbone(cfg):
+def build_mnv2_fpn_backbone(cfg,target=None):
     body = mobilenet.MobileNetV2(cfg)
     in_channels_stage2 = body.return_features_num_channels
     out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
@@ -89,15 +91,16 @@ def build_mnv2_fpn_backbone(cfg):
             cfg.MODEL.FPN.USE_GN, cfg.MODEL.FPN.USE_RELU
         ),
         top_blocks=fpn_module.LastLevelP6P7(out_channels, out_channels),
+        targets=None,
     )
     model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
     model.out_channels = out_channels
     return model
 
 
-def build_backbone(cfg):
+def build_backbone(cfg,target=None):
     assert cfg.MODEL.BACKBONE.CONV_BODY in registry.BACKBONES, \
         "cfg.MODEL.BACKBONE.CONV_BODY: {} are not registered in registry".format(
             cfg.MODEL.BACKBONE.CONV_BODY
         )
-    return registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg)
+    return registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg,target=None)
