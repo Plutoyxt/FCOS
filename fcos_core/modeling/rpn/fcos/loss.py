@@ -1,4 +1,3 @@
-#loss.py
 """
 This file contains specific functions for computing losses of FCOS
 file
@@ -10,13 +9,11 @@ from torch import nn
 import os
 from ..utils import concat_box_prediction_layers
 from fcos_core.layers import IOULoss
-from fcos_core.layers import IOULoss1
 from fcos_core.layers import SigmoidFocalLoss
 from fcos_core.modeling.matcher import Matcher
 from fcos_core.modeling.utils import cat
 from fcos_core.structures.boxlist_ops import boxlist_iou
 from fcos_core.structures.boxlist_ops import cat_boxlist
-import numpy as np
 
 
 INF = 100000000
@@ -54,7 +51,6 @@ class FCOSLossComputation(object):
         # but we found that L1 in log scale can yield a similar performance
         self.box_reg_loss_func = IOULoss(self.iou_loss_type)
         self.centerness_loss_func = nn.BCEWithLogitsLoss(reduction="sum")
-        self.iouness_func = IOULoss1(self.iou_loss_type)
 
     def get_sample_region(self, gt, strides, num_points_per, gt_xs, gt_ys, radius=1.0):
         '''
@@ -206,75 +202,10 @@ class FCOSLossComputation(object):
         left_right = reg_targets[:, [0, 2]]
         top_bottom = reg_targets[:, [1, 3]]
         centerness = (left_right.min(dim=-1)[0] / left_right.max(dim=-1)[0]) * \
-                     (top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
-        
+                      (top_bottom.min(dim=-1)[0] / top_bottom.max(dim=-1)[0])
         return torch.sqrt(centerness)
-    
-    def compute_features_targets(self, features, locations, targets):
-       features_target=[]
-       strides = [8,16,32,64,128]
-       for i,f in enumerate(features):#i = p3(4 images 0,1,2,3),p4,p5,p6,p7
-          saves_feature_weight =[]
-          for j in range(len(targets)):#targets = batch_image 0,1,2,3
-            targets_per_im = targets[j]
-            assert targets_per_im.mode == "xyxy"
-            bboxes = targets_per_im.bbox
-            p = -1
-            weights = torch.zeros([(((features[i])[j])[0].shape)[0],(((features[i])[j])[0].shape)[1]],dtype=torch.float32,device=f.device)#100*100 50*50
-            for k in range(weights.shape[0]):
-              for h in range(weights.shape[1]):
-                p = p+1
-                xs_ys = (locations[i])[p]
-                xl_yl = torch.zeros(xs_ys.shape)
-                xr_yr = torch.zeros(xs_ys.shape)
-                sizes = (targets_per_im.size)
-                if (xs_ys-(strides[i])/2)[0]>=0:
-                  xl_yl[0] = (xs_ys-(strides[i])/2)[0]
-                else:
-                  xl_yl[0] = 0
-                if (xs_ys-(strides[i])/2)[1]>=0:
-                  xl_yl[1] = (xs_ys-(strides[i])/2)[1]
-                else:
-                  xl_yl[1] = 0
-                if (xs_ys+(strides[i])/2)[0]<sizes[0]:
-                  xr_yr[0] = (xs_ys+(strides[i])/2)[0]
-                else:
-                  xr_yr[0] = sizes[0] -1
-                if (xs_ys+(strides[i])/2)[1]<sizes[1]:
-                  xr_yr[1] = (xs_ys+(strides[i])/2)[1]
-                else:
-                  xr_yr[1] = sizes[1] -1
-                box1 = [xl_yl[0].cpu(),xl_yl[1].cpu(),xr_yr[0].cpu(),xr_yr[1].cpu()]
-                box1 = np.array(box1)
-                for l in range(len(bboxes)):
-                  box2 = [(bboxes[l])[0].cpu(),(bboxes[l])[1].cpu(),(bboxes[l])[2].cpu(),(bboxes[l])[3].cpu()]
-                  box2 = np.array(box2)
-                  if IOU(box1,box2)!=0:
-                    weights[k][h] +=2
-                weights[k][h] = torch.sigmoid(weights[k][h])
-            saves_feature_weight.append(weights)
-          #第一次：saves_feature_weight放着p3层这个批次的图片
-          features_target.append(saves_feature_weight)
-          #features_target放着p3,p4,p5,p6,p7五个列表，每个列表里有n(batch=n)张图像tensor
-       return features_target
-    
-    def feature_loss_func(self,feature_map,feature_target_map):
-      p =[]
-      s = 0
-      for leve in range(len(feature_map)):
-        for i in range(((feature_map[leve]).shape)[0]):
-          #print(((feature_map[leve])[i])[0].shape,((feature_target_map[leve])[i]).shape)
-          out_put = torch.cosine_similarity(((feature_map[leve])[i])[0],((feature_target_map[leve])[i]),dim = -1)
-          #print(abs(out_put).shape)
-          out_put = torch.mean(out_put)
-          p.append(abs(out_put))
-      for i in range(len(p)):
-        s = s+p[i]
-      s = s/len(p)
-      s = 20*(1-s)
-      return s
 
-    def __call__(self, locations, box_cls, box_regression, centerness, targets, feature_map,features):
+    def __call__(self, locations, box_cls, box_regression, centerness, targets):
         """
         Arguments:
             locations (list[BoxList])
@@ -282,7 +213,6 @@ class FCOSLossComputation(object):
             box_regression (list[Tensor])
             centerness (list[Tensor])
             targets (list[BoxList])
-
         Returns:
             cls_loss (Tensor)
             reg_loss (Tensor)
@@ -325,12 +255,10 @@ class FCOSLossComputation(object):
             box_cls_flatten,
             labels_flatten.int()
         ) / num_pos_avg_per_gpu
-############################################
-        feature_target_map = self.compute_features_targets(features, locations, targets)
-        feature_loss = self.feature_loss_func(feature_map, feature_target_map)
 
         if pos_inds.numel() > 0:
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
+
             # average sum_centerness_targets from all gpus,
             # which is used to normalize centerness-weighed reg loss
             sum_centerness_targets_avg_per_gpu = \
@@ -349,24 +277,10 @@ class FCOSLossComputation(object):
             reg_loss = box_regression_flatten.sum()
             reduce_sum(centerness_flatten.new_tensor([0.0]))
             centerness_loss = centerness_flatten.sum()
-            
-        return cls_loss, reg_loss, centerness_loss, feature_loss
-        #return cls_loss, reg_loss, reg_loss
 
-def IOU(box1,box2):
-  # 计算中间矩形的宽高
-    in_h = min(box1[2], box2[2]) - max(box1[0], box2[0])
-    in_w = min(box1[3], box2[3]) - max(box1[1], box2[1])
-    
-    # 计算交集、并集面积
-    inter = 0 if in_h < 0 or in_w < 0 else in_h * in_w
-    union = (box1[2] - box1[0]) * (box1[3] - box1[1]) + \
-            (box2[2] - box2[0]) * (box2[3] - box2[1]) - inter
-    # 计算IoU
-    iou = inter / (union+np.exp(-10))
-    return iou
+        return cls_loss, reg_loss, centerness_loss
+
 
 def make_fcos_loss_evaluator(cfg):
     loss_evaluator = FCOSLossComputation(cfg)
     return loss_evaluator
-
