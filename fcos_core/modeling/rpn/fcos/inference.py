@@ -1,4 +1,3 @@
-#inference.py
 import torch
 
 from ..inference import RPNPostProcessor
@@ -48,7 +47,7 @@ class FCOSPostProcessor(torch.nn.Module):
 
     def forward_for_single_feature_map(
             self, locations, box_cls,
-            box_regression, centerness,feature_map,
+            box_regression, centerness,
             image_sizes):
         """
         Arguments:
@@ -65,7 +64,6 @@ class FCOSPostProcessor(torch.nn.Module):
         box_regression = box_regression.reshape(N, -1, 4)
         centerness = centerness.view(N, 1, H, W).permute(0, 2, 3, 1)
         centerness = centerness.reshape(N, -1).sigmoid()
-        feature_map = feature_map.view(N, 1, H, W)
 
         candidate_inds = box_cls > self.pre_nms_thresh
         pre_nms_top_n = candidate_inds.view(N, -1).sum(1)
@@ -114,7 +112,7 @@ class FCOSPostProcessor(torch.nn.Module):
 
         return results
 
-    def forward(self, locations, box_cls, box_regression, centerness,feature_map, image_sizes):
+    def forward(self, locations, box_cls, box_regression, centerness, image_sizes):
         """
         Arguments:
             anchors: list[list[BoxList]]
@@ -126,10 +124,10 @@ class FCOSPostProcessor(torch.nn.Module):
                 applying box decoding and NMS
         """
         sampled_boxes = []
-        for _, (l, o, b, c,f) in enumerate(zip(locations, box_cls, box_regression, centerness,feature_map)):
+        for _, (l, o, b, c) in enumerate(zip(locations, box_cls, box_regression, centerness)):
             sampled_boxes.append(
                 self.forward_for_single_feature_map(
-                    l, o, b, c,f,image_sizes
+                    l, o, b, c, image_sizes
                 )
             )
 
