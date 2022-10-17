@@ -8,14 +8,14 @@ class DatasetCatalog(object):
     DATASETS = {
         "coco_2017_train": {
             #"img_dir": "gdrive/MyDrive/train2 coco",
-            "img_dir": "gdrive/MyDrive/ssdd_coco/train1/after_train_image",
+            "img_dir": "gdrive/MyDrive/ssdd_coco/train1/train_image",
             #"img_dir": "gdrive/MyDrive/HRSID_JPG/after_train_image", 
             #"img_dir": "gdrive/MyDrive/ssdd_coco/train/train_image",#after_
             #"ann_file": "ssdd-coco 2/annotations/train2017/trainval.json"
             "ann_file": "gdrive/MyDrive/ssdd_coco/train1/train.json"
         },
         "coco_2017_val": {
-            "img_dir": "gdrive/MyDrive/ssdd_coco/test1/after_test_image",
+            "img_dir": "gdrive/MyDrive/ssdd_coco/test1/test_image",
             # "img_dir": "gdrive/MyDrive/val2 coco", 
             #"img_dir": "gdrive/MyDrive/ssdd_coco/test/test_image",
             "ann_file": "gdrive/MyDrive/ssdd_coco/test1/test.json"
@@ -27,7 +27,7 @@ class DatasetCatalog(object):
             #"img_dir": "gdrive/MyDrive/val2 coco", 
             #"img_dir": "gdrive/MyDrive/ssdd_coco/test/test_image",
             "ann_file": "gdrive/MyDrive/ssdd_coco/val1/val.json",
-            "img_dir": "gdrive/MyDrive/ssdd_coco/val1/after_val_image",
+            "img_dir": "gdrive/MyDrive/ssdd_coco/val1/val_image",
             #"ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2014_train": {
@@ -36,11 +36,23 @@ class DatasetCatalog(object):
         },
         "coco_2014_val": {
             "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
-            "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
+             "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
         },
         "coco_2014_test": {
             "img_dir": "gdrive/MyDrive/HRSID_JPG/test_image",
             "ann_file": "gdrive/MyDrive/HRSID_JPG/annotations/test2017.json"
+        },
+        "coco_2012_train": {
+            "img_dir": "gdrive/MyDrive/ssdd_coco/train1/after_train_image",
+             "ann_file": "gdrive/MyDrive/ssdd_coco/train1/train.json"
+        },
+        "coco_2012_val": {
+           "img_dir": "gdrive/MyDrive/ssdd_coco/test1/after_test_image",
+           "ann_file": "gdrive/MyDrive/ssdd_coco/test1/test.json"
+        },
+        "coco_2012_test": {
+             "img_dir": "gdrive/MyDrive/ssdd_coco/val1/after_val_image",
+            "ann_file": "gdrive/MyDrive/ssdd_coco/val1/val.json"
         },
         "coco_2014_minival": {
             "img_dir": "coco/val2014",
