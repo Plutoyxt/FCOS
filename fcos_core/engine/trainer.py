@@ -192,7 +192,7 @@ def do_train(
                     memory=torch.cuda.max_memory_allocated() / 1024.0 / 1024.0,
                 )
             )
-        checkpoint_period = 400
+       # checkpoint_period = 400
         if iteration % checkpoint_period == 0:
           checkpointer.save("model_{:07d}".format(iteration), **arguments)
           run_test(cfg, model, args.distributed)
